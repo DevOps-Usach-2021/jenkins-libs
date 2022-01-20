@@ -8,4 +8,5 @@ def despedida(Map params) {
 
 def printEnv() {
     sh "echo '${env.getEnvironment()}'"
+    sh "echo '${env.getEnvironment().BUILD_DISPLAY_NAME}'"
 }
