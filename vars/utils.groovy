@@ -1,5 +1,5 @@
 def saludo(Map params) {
-    sh "hola ${params.nombre}"
+    sh "hola ${params.Nombre}"
 }
 
 def despedida(Map params) {

@@ -6,7 +6,7 @@ def call(Map pipelineParams) {
         stage('Saludo') {
           steps {
             script{
-                utils.saludo(Nombre: pipelineParams.saludo)
+                utils.saludo(Nombre: pipelineParams.Saludo)
             }
           }
         }
