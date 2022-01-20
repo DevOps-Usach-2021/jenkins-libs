@@ -3,10 +3,17 @@ def call(Map pipelineParams) {
     pipeline {
       agent any
       stages {
-        stage('Saludo') {
+        stage('1. Saludo') {
           steps {
             script{
                 utils.saludo(Nombre: pipelineParams.Saludo)
+            }
+          }
+        }
+        stage('2. Test env') {
+          steps {
+            script{
+                utils.printEnv()
             }
           }
         }

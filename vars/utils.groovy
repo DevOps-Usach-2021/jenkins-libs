@@ -5,3 +5,7 @@ def saludo(Map params) {
 def despedida(Map params) {
     sh "adios mundo cruel"
 }
+
+def printEnv() {
+    sh 'echo ${env.BRANCH_NAME}'
+}
