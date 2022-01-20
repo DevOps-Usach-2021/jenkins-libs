@@ -1,19 +1,18 @@
-// vars/evenOrOdd.groovy
-def call(int buildNumber) {
-  if (buildNumber % 2 == 0) {
+def call(Map pipelineParams) {
+//   if (buildNumber % 2 == 0) {
     pipeline {
       agent any
       stages {
         stage('Saludo') {
           steps {
             script{
-                utils.saludo
+                utils.saludo(Nombre: pipelineParams.saludo)
             }
           }
         }
       }
     }
-  } 
+//   }
 //   else {
 //     pipeline {
 //       agent any
