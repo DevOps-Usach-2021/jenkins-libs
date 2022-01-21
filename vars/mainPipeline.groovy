@@ -20,7 +20,7 @@
 
 def call(Map config) {
     pipeline {
-        agent any
+        // agent any
         
         if (env.GIT_BRANCH.startsWith('origin/develop') || env.GIT_BRANCH.startsWith('origin/feature')) {
             echo "Branch: ${env.GIT_BRANCH}"
