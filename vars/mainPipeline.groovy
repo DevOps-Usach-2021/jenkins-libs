@@ -14,8 +14,8 @@
 // }
 def call(Map config) {
     if (true) {
-        ciPipeline
+        ciPipeline()
         } else {
-        cdPipeline
+        cdPipeline()
     }
 }
