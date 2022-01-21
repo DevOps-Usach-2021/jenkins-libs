@@ -18,9 +18,8 @@ def call(Map pipelineParams) {
                     //     GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
                     //     return (GIT_BRANCH.startsWith('develop') || GIT_BRANCH.startsWith('feature-'))
                     // }
-                    anyOf {
-                        branch 'develop'
-                        branch 'feature-*'
+                    expression {
+                        return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-');
                     }
                 }
                 steps {
@@ -34,9 +33,8 @@ def call(Map pipelineParams) {
 
             stage('Paso 3: Testear') {
                 when {
-                    anyOf {
-                        branch 'develop'
-                        branch 'feature-*'
+                    expression {
+                        return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-');
                     }
                 }
                 steps {
@@ -51,9 +49,8 @@ def call(Map pipelineParams) {
             stage('Paso 4: Build .Jar') {
                 steps {
                     when {
-                        anyOf {
-                            branch 'develop'
-                            branch 'feature-*'
+                        expression {
+                            return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-');
                         }
                     }
                     script {
@@ -67,9 +64,8 @@ def call(Map pipelineParams) {
             stage('Paso 5: SonarQube analysis') {
                 steps {
                     when {
-                       anyOf {
-                            branch 'develop'
-                            branch 'feature-*'
+                        expression {
+                            return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-');
                         }
                     }
                     withSonarQubeEnv('SonarQubeUsach') { // You can override the credential to be used
