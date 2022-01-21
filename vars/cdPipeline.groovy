@@ -1,5 +1,4 @@
 // cdPipeline.groovy
-// ciPipeline.groovy
 def call() {
     pipeline {
         agent any
