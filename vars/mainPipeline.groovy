@@ -14,6 +14,7 @@
 // }
 def call(Map config) {
     if (true) {
+        echo "ref: ${$.ref}"
         ciPipeline()
         } else {
         cdPipeline()
