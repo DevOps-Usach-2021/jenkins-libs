@@ -4,7 +4,7 @@ def call(Map pipelineParams) {
         agent any
         stages {
 
-            if (return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
+            if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
 
                 stage('1. Print env') {
                     steps {
