@@ -11,6 +11,13 @@ def call(String) {
             //             userRemoteConfigs: [[url: 'https://github.com/jesusdonoso/ms-iclab.git']]])
             //     }
             // }
+            stage('1. Print env') {
+                steps {
+                    script{
+                        utils.printEnv()
+                    }
+                }
+            }
             stage('Paso 2: Compliar') {
                 steps {
                     script {
