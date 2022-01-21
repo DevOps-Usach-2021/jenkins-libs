@@ -1,6 +1,8 @@
 def call(Map config) {
+    echo "Branch: ${GIT_BRANCH}"
+
     if ("${GIT_BRANCH}".startsWith('origin/develop') || "${GIT_BRANCH}".startsWith('origin/feature')) {
-        sh "echo 'Branch: ${GIT_BRANCH} -> Going through ciPipeline'"
+        echo "Branch: ${GIT_BRANCH}"
         ciPipeline
     }
 }
