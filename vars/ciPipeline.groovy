@@ -39,7 +39,9 @@ def call() {
 
             stage('Paso 5: SonarQube analysis') {
                 steps {
-                    sonarqube.analyze()
+                    script {
+                        sonarqube.analyze()
+                    }
                 }
             }
 
