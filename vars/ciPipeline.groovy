@@ -16,9 +16,7 @@ def call() {
             stage('Paso 2: Compliar') {
                 steps {
                     script {
-                        sh "echo 'Compile Code!'"
-                        // Run Maven on a Unix agent.
-                        sh 'mvn clean compile -e'
+                        maven.compile()
                     }
                 }
             }
@@ -26,9 +24,7 @@ def call() {
             stage('Paso 3: Testear') {
                 steps {
                     script {
-                        sh "echo 'Test Code!'"
-                        // Run Maven on a Unix agent.
-                        sh 'mvn clean test -e'
+                        maven.test()
                     }
                 }
             }
@@ -36,18 +32,14 @@ def call() {
             stage('Paso 4: Build .Jar') {
                 steps {
                     script {
-                        sh "echo 'Build .Jar!'"
-                        // Run Maven on a Unix agent.
-                        sh 'mvn clean package -e'
+                        maven.package()
                     }
                 }
             }
 
             stage('Paso 5: SonarQube analysis') {
                 steps {
-                    withSonarQubeEnv('SonarQubeUsach') { // You can override the credential to be used
-                        sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=lab3-ci-develop'
-                    }
+                    sonarqube.analyze()
                 }
             }
 
