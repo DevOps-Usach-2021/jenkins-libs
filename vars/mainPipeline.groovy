@@ -1,4 +1,5 @@
 def call(Map config) {
+    sh 'printenv'
     echo "Branch: ${env.GIT_BRANCH}"
 
     if (env.GIT_BRANCH.startsWith('origin/develop') || env.GIT_BRANCH.startsWith('origin/feature')) {
