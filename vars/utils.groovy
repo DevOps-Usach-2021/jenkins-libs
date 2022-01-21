@@ -7,10 +7,6 @@ def despedida(Map params) {
 }
 
 def printEnv() {
-    sh "echo 'current env.GIT_BRANCH ${env.GIT_BRANCH}'"
     sh "echo 'current GIT_BRANCH ${GIT_BRANCH}'"
-
-    // sh "echo '${env.getEnvironment()}'"
     sh 'printenv'
-    // sh "echo '${env.getEnvironment().BUILD_DISPLAY_NAME}'"
 }
