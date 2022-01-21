@@ -32,7 +32,7 @@ def call() {
             stage('Paso 4: Build .Jar') {
                 steps {
                     script {
-                        maven.package()
+                        maven.buildJar()
                     }
                 }
             }
