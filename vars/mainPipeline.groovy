@@ -62,12 +62,12 @@ def call(Map pipelineParams) {
             }
 
             stage('Paso 5: SonarQube analysis') {
-                steps {
-                    when {
-                        expression {
-                            return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-');
-                        }
+                when {
+                    expression {
+                        return env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-');
                     }
+                }
+                steps {
                     withSonarQubeEnv('SonarQubeUsach') { // You can override the credential to be used
                         sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=lab3-ci-develop'
                     }
