@@ -1,10 +1,10 @@
-def call(Map config) {
-    // echo "payload ${$.branch}"
-    // if (env.GIT_BRANCH.startsWith('origin/develop') || env.GIT_BRANCH.startsWith('origin/feature')) {
-        // echo "Branch: ${env.GIT_BRANCH}"
-        ciPipeline
-    // }
-}
+// def call(Map config) {
+//     // echo "payload ${$.branch}"
+//     // if (env.GIT_BRANCH.startsWith('origin/develop') || env.GIT_BRANCH.startsWith('origin/feature')) {
+//         // echo "Branch: ${env.GIT_BRANCH}"
+//         ciPipeline
+//     // }
+// }
 
 
 
@@ -17,3 +17,15 @@ def call(Map config) {
 //     //     cdPipeline([:])
 //     // }
 // }
+
+def call() {
+    pipeline {
+        agent any
+        
+        if (env.GIT_BRANCH.startsWith('origin/develop') || env.GIT_BRANCH.startsWith('origin/feature')) {
+            echo "Branch: ${env.GIT_BRANCH}"
+            ciPipeline
+        }
+        
+    }
+}

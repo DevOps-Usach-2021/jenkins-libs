@@ -1,7 +1,7 @@
-// ciPipeline.groovy
-def call() {
-    pipeline {
-        agent any
+// // ciPipeline.groovy
+// def call() {
+//     pipeline {
+//         agent any
         stages {
             // stage('Paso 1: Download and checkout') {
             //     steps {
@@ -68,5 +68,5 @@ def call() {
                 sh "echo 'fase failure'"
             }
         }
-    }
-}
+//     }
+// }
