@@ -12,7 +12,6 @@
 //     //     cdPipeline([:])
 //     // }
 // }
-
 def call(Map config) {
     if (true) {
         ciPipeline
