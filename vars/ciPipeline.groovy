@@ -2,8 +2,8 @@
 def call() {
     pipeline {
         agent any
-        stages {
 
+        stages {
 
             stage('1. Print env') {
                 steps {
