@@ -18,8 +18,10 @@ def call(Map pipelineParams) {
                     //     GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
                     //     return (GIT_BRANCH.startsWith('develop') || GIT_BRANCH.startsWith('feature-'))
                     // }
-                    branch 'develop'
-                    branch 'feature-*'
+                    anyOf {
+                        branch 'develop'
+                        branch 'feature-*'
+                    }
                 }
                 steps {
                     script {
@@ -32,8 +34,10 @@ def call(Map pipelineParams) {
 
             stage('Paso 3: Testear') {
                 when {
-                    branch 'develop'
-                    branch 'feature-*'
+                    anyOf {
+                        branch 'develop'
+                        branch 'feature-*'
+                    }
                 }
                 steps {
                     script {
@@ -47,8 +51,10 @@ def call(Map pipelineParams) {
             stage('Paso 4: Build .Jar') {
                 steps {
                     when {
-                        branch 'develop'
-                        branch 'feature-*'
+                        anyOf {
+                            branch 'develop'
+                            branch 'feature-*'
+                        }
                     }
                     script {
                         sh "echo 'Build .Jar!'"
@@ -61,8 +67,10 @@ def call(Map pipelineParams) {
             stage('Paso 5: SonarQube analysis') {
                 steps {
                     when {
-                        branch 'develop'
-                        branch 'feature-*'
+                       anyOf {
+                            branch 'develop'
+                            branch 'feature-*'
+                        }
                     }
                     withSonarQubeEnv('SonarQubeUsach') { // You can override the credential to be used
                         sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=lab3-ci-develop'
