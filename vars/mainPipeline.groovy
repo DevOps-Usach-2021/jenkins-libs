@@ -3,7 +3,7 @@ def call(Map pipelineParams) {
     if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
         ciPipeline()
     }
-    if (nv.BRANCH_NAME.startsWith('release-')) {
+    if (env.BRANCH_NAME.startsWith('release-')) {
         cdPipeline()
     }
 }
