@@ -14,7 +14,7 @@ def call() {
             stage('1. Print env') {
                 steps {
                     script {
-                        echo "$.ref"
+                        echo "${$.ref}"
                         utils.printEnv()
                     }
                 }
