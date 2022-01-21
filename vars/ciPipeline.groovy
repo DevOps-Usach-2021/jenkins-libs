@@ -1,5 +1,5 @@
 // ciPipeline.groovy
-def call(String) {
+def call(Map pipelineParams) {
     pipeline {
         agent any
         stages {
