@@ -10,8 +10,8 @@ def test() {
     sh 'mvn clean test -e'
 }
 
-def package() {
-    sh "echo 'Build .Jar!'"
-    // Run Maven on a Unix agent.
-    sh 'mvn clean package -e'
-}
+// def package() {
+//     sh "echo 'Build .Jar!'"
+//     // Run Maven on a Unix agent.
+//     sh 'mvn clean package -e'
+// }
