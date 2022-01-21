@@ -1,5 +1,5 @@
 // ciPipeline.groovy
-def call(Map pipelineParams) {
+def call() {
     pipeline {
         agent any
         stages {
@@ -13,7 +13,7 @@ def call(Map pipelineParams) {
             // }
             stage('1. Print env') {
                 steps {
-                    script{
+                    script {
                         utils.printEnv()
                     }
                 }
@@ -48,7 +48,7 @@ def call(Map pipelineParams) {
             stage('SonarQube analysis') {
                 steps {
                     withSonarQubeEnv('SonarQubeUsach') { // You can override the credential to be used
-                        sh "mvn clean verify sonar:sonar -Dsonar.projectKey=lab3-ci-develop"
+                        sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=lab3-ci-develop'
                     }
                     withSonarQubeEnv('SonarQubeUsach') { // This expands the evironment variables SONAR_CONFIG_NAME, SONAR_HOST_URL, SONAR_AUTH_TOKEN that can be used by any script.
                         println "${env.SONAR_HOST_URL}"
