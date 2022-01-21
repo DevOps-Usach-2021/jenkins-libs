@@ -1,10 +1,10 @@
 // mainOipeline.groovy
 def call(Map pipelineParams) {
+if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
     pipeline {
         agent any
         stages {
 
-            if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
 
                 stage('1. Print env') {
                     steps {
@@ -75,10 +75,6 @@ def call(Map pipelineParams) {
                         }
                     }
                 }
-
-            }
-
-            if (env.BRANCH_NAME.startsWith('release-')) {
 
                 stage('Paso 6: Levantar Springboot APP') {
                     when {
