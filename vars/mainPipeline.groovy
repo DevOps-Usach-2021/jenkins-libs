@@ -14,7 +14,6 @@
 // }
 def call(Map config) {
     if (true) {
-        echo $.ref
         ciPipeline()
         } else {
         cdPipeline()
