@@ -7,7 +7,6 @@ def despedida(Map params) {
 }
 
 def printEnv() {
-    sh "echo 'HELLO!!! ${BRANCH_NAME}'"
     sh "echo 'current Branch: ${env.BRANCH_NAME}'"
 
     // sh "echo '${env.getEnvironment()}'"
