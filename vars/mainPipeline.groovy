@@ -1,6 +1,6 @@
 def call(Map config) {
-    if (env.BRANCH_NAME.startsWith('origin/develop') || env.BRANCH_NAME.startsWith('origin/feature')) {
-        echo "Branch: ${env.BRANCH_NAME}"
+    if (env.GIT_BRANCH.startsWith('origin/develop') || env.GIT_BRANCH.startsWith('origin/feature')) {
+        echo "Branch: ${env.GIT_BRANCH}"
         ciPipeline
     }
 }
