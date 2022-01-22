@@ -4,22 +4,17 @@ def call() {
         agent any
         triggers {
             GenericTrigger(
-            genericVariables: [
-            [key: 'ref', value: '$.ref']
-            ],
+                genericVariables: [
+                    [key: 'ref', value: '$.ref'],
+                    [key: 'before', value: '$.before'],
+                ],
 
-            causeString: 'Triggered on $ref',
+                causeString: 'Triggered on $ref',
 
-            token: 'abc123',
-            tokenCredentialId: '',
+                printContributedVariables: true,
+                printPostContent: true,
 
-            printContributedVariables: true,
-            printPostContent: true,
-
-            silentResponse: false,
-
-            regexpFilterText: '$ref',
-            regexpFilterExpression: 'refs/heads/' + BRANCH_NAME
+                silentResponse: false,
             )
         }
         environment {
@@ -31,6 +26,7 @@ def call() {
             stage('1. Print env') {
                 steps {
                     script {
+                        sh "echo 'before $before'"
                         utils.printEnv()
                     }
                 }
