@@ -53,6 +53,7 @@ def call() {
                 }
                 steps {
                     sh "echo 'Generando rama release'"
+                }
             }
         }
         post {
