@@ -3,8 +3,8 @@ def call() {
     pipeline {
         agent any
         environment {
-        JENKINSTOKEN = credentials('github-token')
-    }
+            GITHUB_TOKEN = credentials('github-token')
+        }
         stages {
 
             stage('1. Print env') {
@@ -58,8 +58,10 @@ def call() {
         }
         post {
             success {
+                if (env.BRAN)
                 sh "echo 'CI pipeline success'"
-                sh """curl -X POST -d '{"title":"new feature: $BRANCH_NAME ","head":"$BRANCH_NAME","base":"develop"}' -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $JENKINSTOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls"""
+                sh "prNumber=`curl -X POST -d '{"title":"new feature: $BRANCH_NAME ","head":"$BRANCH_NAME","base":"develop"}' -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls | jq '.number'`"
+                sh "curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls/${prNumber}/requested_reviewers -d '{"reviewers":["jesusdonoso","fgutierrez27"]}'"
             }
             failure {
                 sh "echo 'CI pipeline failure'"
