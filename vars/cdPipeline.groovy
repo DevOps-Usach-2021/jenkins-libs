@@ -2,27 +2,33 @@
 def call() {
     pipeline {
         agent any
+        environment {
+            ARTIFACT_VERSION = '0.0.1'
+        }
         stages {
+
+            stage('Paso 5: Download Artifact') {
+                steps {
+                    withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                            sh 'curl -X GET -u $USER:$PASSWORD https://nexus.devopslab.cl/repository/devops-usach-nexus/com/devopsusach2022/DevOpsUsach2022/${ARTIFACT_VERSION}/DevOpsUsach2022-${ARTIFACT_VERSION}.jar -O'
+                            sh "ls"
+                    }
+                }
+            }
 
             stage('Paso 6: Levantar Springboot APP') {
                 steps {
-                    sh 'mvn spring-boot:run &'
+                    maven.runApp()
                 }
             }
 
             stage('Paso 7: Dormir(Esperar 10sg) ') {
-                when {
-                    branch 'release-*'
-                }
                 steps {
-                    sh 'sleep 100'
+                    sh 'sleep 10'
                 }
             }
 
             stage('Paso 8: Test Alive Service - Testing Application!') {
-                when {
-                    branch 'release-*'
-                }
                 steps {
                     sh 'curl -X GET "http://localhost:8081/rest/mscovid/test?msg=testing"'
                 }
@@ -30,7 +36,11 @@ def call() {
         }
         post {
             success {
-                sh "echo 'CD pipeline success'"
+                script {
+                    sh "echo 'CD pipeline success'"
+                    PROCESS_ID = sh "jps | grep DevOpsUsach2022 | tr -s ' ' | cut -d ' ' -f 1"
+                    sh "kill $PROCSES_ID"
+                }
             }
             failure {
                 sh "echo 'CD pipeline failure'"

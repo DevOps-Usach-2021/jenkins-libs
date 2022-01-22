@@ -15,3 +15,7 @@ def buildJar() {
     // Run Maven on a Unix agent.
     sh 'mvn clean package -e'
 }
+
+def runApp() {
+    sh 'nohup java -jar DevOpsUsach2022-${ARTIFACT_VERSION}.jar & >/dev/null'
+}

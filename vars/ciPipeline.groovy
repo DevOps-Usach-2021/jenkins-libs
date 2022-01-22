@@ -4,6 +4,7 @@ def call() {
         agent any
         environment {
             GITHUB_TOKEN = credentials('github-token')
+            ARTIFACT_VERSION = '0.0.1'
         }
         stages {
 
@@ -45,6 +46,12 @@ def call() {
                         sonarqube.analyze()
                     }
                 }
+                post {
+                    //record the test results and archive the jar file.
+                    success {
+                        nexus.uploadArtifact()
+                    }
+                }
             }
 
             stage('Paso 6: Generar rama Release') {
@@ -59,12 +66,7 @@ def call() {
         post {
             success {
                 script {
-                    sh "echo 'CI pipeline success'"
-                    PR_NUMBER = sh (
-                        script: """curl -X POST -d '{"title":"new feature: $BRANCH_NAME ","head":"$BRANCH_NAME","base":"develop"}' -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls | jq '.number'""",
-                        returnStdout: true
-                    ).trim()
-                    sh """curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls/$PR_NUMBER/requested_reviewers -d '{"reviewers":["jesusdonoso","anguitait", "carlostognarell", "MFrizR", "MrOscarDanilo"]}'"""
+                    github.createPullRequest()
                 }
             }
             failure {
