@@ -41,7 +41,7 @@ def call() {
                 script {
                     sh "echo 'CD pipeline success'"
                     PROCESS_ID = sh "jps | grep DevOpsUsach2022 | tr -s ' ' | cut -d ' ' -f 1"
-                    sh "kill $PROCSES_ID"
+                    sh "kill $PROCESS_ID"
                 }
             }
             failure {
