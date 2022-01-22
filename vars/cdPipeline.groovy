@@ -40,7 +40,12 @@ def call() {
             success {
                 script {
                     sh "echo 'CD pipeline success'"
-                    PROCESS_ID = sh "jps | grep DevOpsUsach2022 | tr -s ' ' | cut -d ' ' -f 1"
+
+                    PROCESS_ID = sh (
+                        script: "jps | grep DevOpsUsach2022 | tr -s ' ' | cut -d ' ' -f 1",
+                        returnStdout: true
+                    ).trim()
+
                     sh "kill $PROCESS_ID"
                 }
             }
