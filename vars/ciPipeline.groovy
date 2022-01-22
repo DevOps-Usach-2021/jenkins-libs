@@ -2,7 +2,9 @@
 def call() {
     pipeline {
         agent any
-
+        environment {
+        JENKINSTOKEN = credentials('github-token')
+    }
         stages {
 
             stage('1. Print env') {
@@ -57,6 +59,7 @@ def call() {
         post {
             success {
                 sh "echo 'CI pipeline success'"
+                sh """curl -X POST -d '{"title":"new feature: $BRANCH_NAME ","head":"$BRANCH_NAME","base":"develop"}' -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $JENKINSTOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls"""
             }
             failure {
                 sh "echo 'CI pipeline failure'"
