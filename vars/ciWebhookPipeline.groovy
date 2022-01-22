@@ -8,6 +8,7 @@ def call() {
             [key: 'ref', value: '$.ref']
             ],
             causeString: 'Triggered on $ref',
+            token: 'abc123',
             regexpFilterExpression: '',
             regexpFilterText: '',
             printContributedVariables: true,
