@@ -49,7 +49,9 @@ def call() {
                 post {
                     //record the test results and archive the jar file.
                     success {
-                        nexus.uploadArtifact()
+                        script {
+                            nexus.uploadArtifact()
+                        }
                     }
                 }
             }

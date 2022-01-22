@@ -18,7 +18,9 @@ def call() {
 
             stage('Paso 6: Levantar Springboot APP') {
                 steps {
-                    maven.runApp()
+                    script {
+                        maven.runApp()
+                    }
                 }
             }
 
