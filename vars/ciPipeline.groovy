@@ -53,14 +53,16 @@ def call() {
                 }
                 steps {
                     sh "echo 'Generando rama release'"
-                }
             }
         }
         post {
             success {
                 sh "echo 'CI pipeline success'"
-                sh """prNumber=`curl -X POST -d '{"title":"new feature: $BRANCH_NAME ","head":"$BRANCH_NAME","base":"develop"}' -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls`"""
-                sh """curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls/$prNumber/requested_reviewers -d '{"reviewers":["jesusdonoso","fgutierrez27"]}'"""
+                PR_NUMBER = sh (
+                    script: """curl -X POST -d '{"title":"new feature: $BRANCH_NAME ","head":"$BRANCH_NAME","base":"develop"}' -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls""",
+                    returnStdout: true
+                ).trim()
+                sh """curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls/$PR_NUMBER/requested_reviewers -d '{"reviewers":["jesusdonoso","fgutierrez27"]}'"""
             }
             failure {
                 sh "echo 'CI pipeline failure'"
