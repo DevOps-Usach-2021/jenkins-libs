@@ -4,7 +4,8 @@ def call() {
         agent any
         environment {
             GITHUB_TOKEN = credentials('github-token')
-            ARTIFACT_VERSION = '0.0.1'
+            PAYLOAD = github.getCommitPayload()
+            ARTIFACT_VERSION = utils.getVersion(PAYLOAD.commit.message)
         }
         stages {
 
