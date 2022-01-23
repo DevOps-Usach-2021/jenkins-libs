@@ -10,6 +10,8 @@ def call() {
             stage('1. Load environment') {
                 steps {
                     script {
+                        env.REPOSITORY = GIT_URL.split('github.com/')[1].split('.git')[0]
+                        currentBuild.displayName = REPOSITORY + '' + BRANCH_NAME + '' + BUILD_NUMBER
                         PAYLOAD = github.getCommitPayload()
                         env.ARTIFACT_VERSION = utils.getVersionFromCommit(utils.parseJson(PAYLOAD).commit.message)
                         print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
