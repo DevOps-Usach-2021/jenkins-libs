@@ -8,9 +8,12 @@ def call() {
                 steps {
                     script {
                         env.REPOSITORY = GIT_URL.split('github.com/')[1].split('.git')[0]
+                        PAYLOAD = github.getCommitPayload()
+                        def payload = utils.parseJson(PAYLOAD)
                         currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
+                        currentBuild.description = payload.commit.message
                         env.ARTIFACT_VERSION = utils.getVersionFromBranch(BRANCH_NAME)
-                        print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
+                        // print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
                         utils.printEnv()
                     }
                 }

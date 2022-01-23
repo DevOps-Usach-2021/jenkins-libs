@@ -11,10 +11,12 @@ def call() {
                 steps {
                     script {
                         env.REPOSITORY = GIT_URL.split('github.com/')[1].split('.git')[0]
-                        currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
                         PAYLOAD = github.getCommitPayload()
-                        env.ARTIFACT_VERSION = utils.getVersionFromCommit(utils.parseJson(PAYLOAD).commit.message)
-                        print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
+                        def payload = utils.parseJson(PAYLOAD)
+                        currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
+                        currentBuild.description = payload.commit.message
+                        env.ARTIFACT_VERSION = utils.getVersionFromCommit(payload.commit.message)
+                        // print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
                         utils.printEnv()
                     }
                 }
