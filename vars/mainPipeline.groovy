@@ -1,10 +1,9 @@
-// mainOipeline.groovy
+// mainPipeline.groovy
 def call(Map pipelineParams) {
-    ciWebhookPipeline()
-    // if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
-    //     ciPipeline()
-    // }
-    // if (env.BRANCH_NAME.startsWith('release-')) {
-    //     cdPipeline()
-    // }
+    if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
+        ciPipeline()
+    }
+    if (env.BRANCH_NAME.startsWith('release-')) {
+        cdPipeline()
+    }
 }
