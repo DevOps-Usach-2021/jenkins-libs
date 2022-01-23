@@ -10,7 +10,7 @@ def call() {
             causeString: 'Triggered on $ref',
             token: 'abc123',
             regexpFilterExpression: '',
-            regexpFilterText: $BRANCH_NAME,
+            regexpFilterText: '$BRANCH_NAME',
             printContributedVariables: true,
             printPostContent: true
             )
