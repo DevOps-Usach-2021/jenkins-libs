@@ -4,14 +4,16 @@ def call() {
         agent any
         environment {
             GITHUB_TOKEN = credentials('github-token')
-            PAYLOAD = github.getCommitPayload()
-            ARTIFACT_VERSION = utils.getVersion(PAYLOAD.commit.message)
+            PAYLOAD = [:]
+            ARTIFACT_VERSION = ''
         }
         stages {
 
-            stage('1. Print env') {
+            stage('1. Load env') {
                 steps {
                     script {
+                        PAYLOAD = github.getCommitPayload()
+                        ARTIFACT_VERSION = utils.getVersion(PAYLOAD.commit.message)
                         utils.printEnv()
                     }
                 }
