@@ -19,7 +19,11 @@ def call() {
         stages {
             stage('Some step') {
                 steps {
-                    sh "echo $ref"
+                    sh """
+                    echo Variables from shell:
+                    echo reference ${ref}
+                    echo repository ${repository}
+                    """
                 }
             }
         }
