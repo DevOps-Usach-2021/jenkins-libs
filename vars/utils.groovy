@@ -9,3 +9,9 @@ def getVersion(String message) {
         throw new Exception("Debe agregar '::<version>' al final del mensaje de commit")
     }
 }
+
+def parseJson(String jsonString) {
+    def mapObj = readJSON text: jsonString
+
+    return mapObj
+}

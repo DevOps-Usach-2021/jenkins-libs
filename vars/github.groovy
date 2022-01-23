@@ -25,9 +25,3 @@ def Map getCommitPayload() {
 
     return payload
 }
-
-def parseJson(String jsonString) {
-    def mapObj = readJSON text: jsonString
-
-    return mapObj
-}
