@@ -11,7 +11,7 @@ def call() {
                 causeString: 'Triggered on $ref',
                 token: 'abc123',
                 regexpFilterExpression: '',
-                regexpFilterText: '$repository refs/heads/' + BRANCH_NAME,
+                regexpFilterText: '*/refs/heads/' + BRANCH_NAME,
                 printContributedVariables: true,
                 printPostContent: true
             )
