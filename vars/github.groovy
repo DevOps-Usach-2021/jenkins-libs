@@ -13,7 +13,7 @@ def createPullRequest() {
 }
 
 def Map getCommitPayload() {
-    def jsonObjStr = sh (
+    def jsonString = sh (
         script: 
         '''
             curl -X GET -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/commits/$GIT_COMMIT
@@ -21,9 +21,9 @@ def Map getCommitPayload() {
         returnStdout: true
     ).trim()
 
-    print(jsonObjStr)
+    print(jsonString)
 
-    def jsonObj = readJSON text: jsonString
+    def payload = readJSON text: jsonString
 
-    return jsonObj
+    return payload
 }
