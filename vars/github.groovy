@@ -21,6 +21,8 @@ def Map getCommitPayload() {
         returnStdout: true
     ).trim()
 
+    print(jsonObjStr)
+
     def jsonObj = readJSON text: jsonString
 
     return jsonObj
