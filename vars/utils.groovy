@@ -12,9 +12,9 @@ def getVersionFromCommit(String message) {
 
 def getVersionFromBranch(String branchName) {
     try {
-        return message.split('release-v')[1]..replaceAll("-",".")
+        return message.split('release-v')[1].replaceAll("-",".")
     } catch(Exception ex) {
-        throw new Exception("Debe utilizar el formato 'release-v<major>-<minor><patch>' en el nombre de rama")
+        throw new Exception("Debe utilizar el formato 'release-v<major>-<minor>_<patch>' en el nombre de rama")
     }
 }
 
