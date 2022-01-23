@@ -2,6 +2,9 @@
 def call() {
     pipeline {
         agent any
+        environment {
+            GITHUB_TOKEN = credentials('github-token')
+        }
         stages {
 
             stage('1. Load environment') {
