@@ -2,13 +2,11 @@
 def call() {
     pipeline {
         agent any
-        environment {
-        }
         stages {
 
             stage('Paso 5: Download Artifact') {
                 steps {
-                    env.ARTIFACT_VERSION = getVersionFromBranch($)
+                    env.ARTIFACT_VERSION = getVersionFromBranch(BRANCH_NAME)
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
                             sh 'curl -X GET -u $USER:$PASSWORD https://nexus.devopslab.cl/repository/devops-usach-nexus/com/devopsusach2022/DevOpsUsach2022/${ARTIFACT_VERSION}/DevOpsUsach2022-${ARTIFACT_VERSION}.jar -O'
                             sh "ls"
