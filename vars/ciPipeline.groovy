@@ -74,7 +74,9 @@ def call() {
         post {
             success {
                 script {
-                    github.createPullRequest()
+                    if (env.BRANCH_NAME.startsWith('feature-')) {
+                        github.createPullRequest()
+                    }
                 }
             }
             failure {
