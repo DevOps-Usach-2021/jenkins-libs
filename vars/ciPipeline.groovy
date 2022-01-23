@@ -10,6 +10,7 @@ def call() {
             stage('1. Load environment') {
                 steps {
                     script {
+                        utils.printEnv()
                         env.REPOSITORY = GIT_URL.split('github.com/')[1].split('.git')[0]
                         PAYLOAD = github.getCommitPayload()
                         def payload = utils.parseJson(PAYLOAD)
@@ -17,7 +18,6 @@ def call() {
                         currentBuild.description = payload.commit.message
                         env.ARTIFACT_VERSION = utils.getVersionFromCommit(payload.commit.message)
                         // print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
-                        utils.printEnv()
                     }
                 }
             }
