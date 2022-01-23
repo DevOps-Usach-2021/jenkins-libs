@@ -11,7 +11,7 @@ def call() {
                 steps {
                     script {
                         PAYLOAD = github.getCommitPayload()
-                        env.ARTIFACT_VERSION = utils.getVersion(utils.parseJson(PAYLOAD).commit.message)
+                        env.ARTIFACT_VERSION = utils.getVersionFromCommit(utils.parseJson(PAYLOAD).commit.message)
                         print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
                         utils.printEnv()
                     }
