@@ -7,9 +7,11 @@ def call() {
             stage('Paso 5: Download Artifact') {
                 steps {
                     withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-                        env.ARTIFACT_VERSION = getVersionFromBranch(BRANCH_NAME)
-                        sh 'curl -X GET -u $USER:$PASSWORD https://nexus.devopslab.cl/repository/devops-usach-nexus/com/devopsusach2022/DevOpsUsach2022/${ARTIFACT_VERSION}/DevOpsUsach2022-${ARTIFACT_VERSION}.jar -O'
-                        sh "ls"
+                        script {
+                            env.ARTIFACT_VERSION = getVersionFromBranch(BRANCH_NAME)
+                            sh 'curl -X GET -u $USER:$PASSWORD https://nexus.devopslab.cl/repository/devops-usach-nexus/com/devopsusach2022/DevOpsUsach2022/${ARTIFACT_VERSION}/DevOpsUsach2022-${ARTIFACT_VERSION}.jar -O'
+                            sh "ls"
+                        }
                     }
                 }
             }
