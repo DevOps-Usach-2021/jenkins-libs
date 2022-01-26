@@ -7,6 +7,7 @@ def createPullRequest() {
             """,
         returnStdout: true
     ).trim()
+    print('PR_NUMBER: ' + PR_NUMBER)
     sh """
         curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/DevOps-Usach-2021/ms-iclab/pulls/$PR_NUMBER/requested_reviewers -d '{"reviewers":["jesusdonoso","anguitait", "carlostognarell", "MFrizR", "MrOscarDanilo", "fernandogutierrez27"]}'
     """
@@ -25,6 +26,7 @@ def Map getCommitPayload() {
 
     return payload
 }
+
 def createReleaseBranch() {
     sh "echo 'CI pipeline success'"
     SHA = sh (
