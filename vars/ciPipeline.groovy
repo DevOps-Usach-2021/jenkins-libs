@@ -67,7 +67,10 @@ def call() {
                     branch 'develop'
                 }
                 steps {
-                    sh "echo 'Generando rama release'"
+                    script {
+                        sh "echo 'Generando rama release'"
+                        github.createReleaseBranch()
+                    }
                 }
             }
         }

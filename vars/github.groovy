@@ -25,22 +25,22 @@ def Map getCommitPayload() {
 
     return payload
 }
-def createBranch() {
+def createReleaseBranch() {
     sh "echo 'CI pipeline success'"
     SHA = sh (
         script:
             '''
-                curl -H "Authorization: token $JENKINSTOKEN" https://api.github.com/repos/jesusdonoso/ejemplo-maven/git/refs/heads/shared-library | jq -r '.object.sha'
+                curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/refs/heads/$BRANCH_NAME | jq -r '.object.sha'
             ''',
         returnStdout: true
     ).trim()
 
     print (SHA)
-
+    def branchName = ARTIFACT_VERSION.replaceAll(".","-")
     sh (
         script:
         """
-            curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN"  https://api.github.com/repos/jesusdonoso/ejemplo-maven/git/refs -d '{"ref": "refs/heads/test-rama1", "sha": "$SHA"}'
+            curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN"  https://api.github.com/repos/$REPOSITORY/git/refs -d '{"ref": "refs/heads/release-v$branchName", "sha": "$SHA"}'
         """,
     )
 }
