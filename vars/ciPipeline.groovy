@@ -17,7 +17,7 @@ def call() {
                         currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
                         currentBuild.description = payload.commit.message
                         env.ARTIFACT_VERSION = utils.getVersionFromCommit(payload.commit.message)
-                        // print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
+                        print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
                     }
                 }
             }

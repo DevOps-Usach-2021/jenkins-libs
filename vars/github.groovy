@@ -38,7 +38,7 @@ def createReleaseBranch() {
     ).trim()
 
     print (SHA)
-    def branchName = ARTIFACT_VERSION.replaceAll(".","-")
+    def branchName = ARTIFACT_VERSION.replaceAll("\\.","-")
     sh (
         script:
         """
