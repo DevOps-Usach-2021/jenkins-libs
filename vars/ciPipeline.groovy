@@ -72,6 +72,9 @@ def call() {
             }
         }
         post {
+            always {
+            sendNotifications currentBuild.result
+        }
             success {
                 script {
                     if (env.BRANCH_NAME.startsWith('feature-')) {
