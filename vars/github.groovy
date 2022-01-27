@@ -48,9 +48,19 @@ def createReleaseBranch() {
 }
 
 
-def MergeBranch() {
+def mergeBranch(String baseBranch) {
+    print ("merging branch" + BRANCH_NAME + ' into ' + baseBranch)
+    SHA = sh (
+        script:
+            '''
+                curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/refs/heads/$BRANCH_NAME | jq -r '.object.sha'
+            ''',
+        returnStdout: true
+    ).trim()
 
-    sh '''
-        curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/jesusdonoso/ejemplo-maven/merges -d '{"head":"shared-library","base":"test-rama1"}'
-    '''
+    print (SHA)
+
+    sh """
+        curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/merges -d '{"head":"$SHA","base":"$baseBranch"}'
+    """
 }
