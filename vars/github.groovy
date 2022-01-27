@@ -77,7 +77,18 @@ def tagMainBranch() {
 
     print (SHA)
 
+    SHA_TAG = sh (
+        script:
+        """
+            curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/tags -d '{"tag":"$ARTIFACT_VERSION", "message":"$ARTIFACT_VERSION", "object": "$SHA", "type": "commit"}' | jq -r '.sha'
+        """,
+        returnStdout: true
+
+    )
+
+    print('SHA_TAG: ',SHA_TAG)
+
     sh """
-        curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/tags -d '{"tag":"$ARTIFACT_VERSION", "message":"$ARTIFACT_VERSION", "object": "$SHA", "type": "commit"}'
+        curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/refs -d '{"ref":"refs/tags/$ARTIFACT_VERSION", "sha": "$SHA_TAG"}'
     """
 }
