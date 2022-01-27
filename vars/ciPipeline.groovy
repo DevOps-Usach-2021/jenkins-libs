@@ -22,7 +22,9 @@ def call() {
                 }
                 post {
                     failure {
-                        env.FAIL_STAGE_NAME = STAGE_NAME
+                        script {
+                            env.FAIL_STAGE_NAME = STAGE_NAME
+                        }
                     }
                 }
             }
@@ -35,7 +37,9 @@ def call() {
                 }
                 post {
                     failure {
-                        env.FAIL_STAGE_NAME = STAGE_NAME
+                        script {
+                            env.FAIL_STAGE_NAME = STAGE_NAME
+                        }
                     }
                 }
             }
@@ -48,7 +52,9 @@ def call() {
                 }
                 post {
                     failure {
-                        env.FAIL_STAGE_NAME = STAGE_NAME
+                        script {
+                            env.FAIL_STAGE_NAME = STAGE_NAME
+                        }
                     }
                 }
             }
@@ -61,7 +67,9 @@ def call() {
                 }
                 post {
                     failure {
-                        env.FAIL_STAGE_NAME = STAGE_NAME
+                        script {
+                            env.FAIL_STAGE_NAME = STAGE_NAME
+                        }
                     }
                 }
             }
@@ -80,7 +88,9 @@ def call() {
                         }
                     }
                     failure {
-                        env.FAIL_STAGE_NAME = STAGE_NAME
+                        script {
+                            env.FAIL_STAGE_NAME = STAGE_NAME
+                        }
                     }
                 }
             }
@@ -97,7 +107,9 @@ def call() {
                 }
                 post {
                     failure {
-                        env.FAIL_STAGE_NAME = STAGE_NAME
+                        script {
+                            env.FAIL_STAGE_NAME = STAGE_NAME
+                        }
                     }
                 }
             }
