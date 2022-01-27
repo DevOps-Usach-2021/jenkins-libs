@@ -64,3 +64,21 @@ def mergeBranch(String baseBranch) {
         curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/merges -d '{"head":"$SHA","base":"$baseBranch"}'
     """
 }
+
+def tagMainBranch() {
+    print ("tagging main branch")
+    SHA = sh (
+        script:
+            '''
+                curl -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/refs/heads/main | jq -r '.object.sha'
+            ''',
+        returnStdout: true
+    ).trim()
+
+    print (SHA)
+
+    sh """
+        curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/tags 
+        -d '{"tag":"$ARTIFACT_VERSION", "message":"$ARTIFACT_VERSION", "object": "$SHA", "type": "commit"}'
+    """
+}

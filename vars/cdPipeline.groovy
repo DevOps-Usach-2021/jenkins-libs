@@ -48,12 +48,22 @@ def call() {
                 steps {
                     sh 'curl -X GET "http://localhost:8082/rest/mscovid/test?msg=testing"'
                 }
-                post {
-                    success {
-                        script {
-                            github.mergeBranch('develop')
-                            github.mergeBranch('main')
-                        }
+            }
+
+            stage('Paso 6: Merge to main') {
+                steps {
+                    script {
+                        // github.mergeBranch('develop')
+                        github.mergeBranch('main')
+                    }
+                }
+            }
+
+            stage('Paso 7: Tag') {
+                steps {
+                    script {
+                        // github.mergeBranch('develop')
+                        github.tagMainBranch()
                     }
                 }
             }
