@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 def call(String buildResult) {
 
-  if (env.FAIL_STAGE_NAME) {
+  if (!env.FAIL_STAGE_NAME) {
     env.FAIL_STAGE_NAME = 'Validación Final'
   }
 
