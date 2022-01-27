@@ -86,7 +86,7 @@ def tagMainBranch() {
 
     )
 
-    print('SHA_TAG: ',SHA_TAG)
+    print('SHA_TAG: ' + SHA_TAG)
 
     sh """
         curl -X POST -H "Accept 'application/vnd.github.v3+json'" -H "Authorization: token $GITHUB_TOKEN" https://api.github.com/repos/$REPOSITORY/git/refs -d '{"ref":"refs/tags/$ARTIFACT_VERSION", "sha": "$SHA_TAG"}'
