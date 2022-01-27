@@ -84,7 +84,7 @@ def tagMainBranch() {
         """,
         returnStdout: true
 
-    )
+    ).trim()
 
     print('SHA_TAG: ' + SHA_TAG)
 
