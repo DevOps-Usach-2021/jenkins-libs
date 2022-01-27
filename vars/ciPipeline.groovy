@@ -20,12 +20,22 @@ def call() {
                         print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
                     }
                 }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
+                }
             }
 
             stage('Paso 2: Compliar') {
                 steps {
                     script {
                         maven.compile()
+                    }
+                }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
                     }
                 }
             }
@@ -36,12 +46,22 @@ def call() {
                         maven.test()
                     }
                 }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
+                }
             }
 
             stage('Paso 4: Build .Jar') {
                 steps {
                     script {
                         maven.buildJar()
+                    }
+                }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
                     }
                 }
             }
@@ -59,6 +79,9 @@ def call() {
                             nexus.uploadArtifact()
                         }
                     }
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
                 }
             }
 
@@ -70,6 +93,11 @@ def call() {
                     script {
                         sh "echo 'Generando rama release'"
                         github.createReleaseBranch()
+                    }
+                }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
                     }
                 }
             }

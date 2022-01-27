@@ -20,12 +20,22 @@ def call() {
                         // print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
                     }
                 }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
+                }
             }
 
             stage('Paso 2: Download Artifact') {
                 steps {
                     script {
                         nexus.downloadArtifact()
+                    }
+                }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
                     }
                 }
             }
@@ -36,17 +46,32 @@ def call() {
                         maven.runApp()
                     }
                 }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
+                }
             }
 
             stage('Paso 4: Dormir(Esperar 10sg) ') {
                 steps {
                     sh 'sleep 10'
                 }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
+                }
             }
 
             stage('Paso 5: Test Alive Service - Testing Application!') {
                 steps {
                     sh 'curl -X GET "http://localhost:8082/rest/mscovid/test?msg=testing"'
+                }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
                 }
             }
 
@@ -55,6 +80,11 @@ def call() {
                     script {
                         // github.mergeBranch('develop')
                         github.mergeBranch('main')
+                    }
+                }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
                     }
                 }
             }
@@ -66,9 +96,17 @@ def call() {
                         github.tagMainBranch()
                     }
                 }
+                post {
+                    failure {
+                        env.FAIL_STAGE_NAME = STAGE_NAME
+                    }
+                }
             }
         }
         post {
+            always {
+                sendNotifications currentBuild.result
+            }
             success {
                 script {
                     sh "echo 'CD pipeline success'"
