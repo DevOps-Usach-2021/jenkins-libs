@@ -29,7 +29,9 @@ def call(Map pipelineParams) {
         }
         post {
             always {
-                slack.sendNotification currentBuild.result
+                script {
+                    slack.sendNotification currentBuild.result
+                }
             }
             success {
                 script {
