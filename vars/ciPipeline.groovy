@@ -5,11 +5,15 @@ def call() {
         environment {
             GITHUB_TOKEN = credentials('github-token')
         }
+        parameters {
+            string defaultValue: 'all', name: 'stages'
+        }
         stages {
 
             stage('1. Load environment') {
                 steps {
                     script {
+                        print("stages: " + stages)
                         utils.printEnv()
                         env.REPOSITORY = GIT_URL.split('github.com/')[1].split('.git')[0]
                         PAYLOAD = github.getCommitPayload()
