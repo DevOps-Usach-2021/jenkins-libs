@@ -4,13 +4,17 @@ def call(String stages) {
     loadEnvironment()
     switch (stages) {
         case ~/.*build.*|all/:
+            print("stages: " + stages)
             build()
         case ~/.*staticAnalysis.*|all/:
+            print("stages: " + stages)
             staticAnalysis()
         case ~/.*uploadArtifact.*|all/:
+            print("stages: " + stages)
             uploadArtifact()
         case ~/.*generateRelease.*|all/:
             if (env.BRANCH_NAME == "develop") {
+                print("stages: " + stages)
                 generateRelease()
             }
     }
