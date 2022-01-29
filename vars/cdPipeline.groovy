@@ -1,16 +1,22 @@
 // cdPipeline.groovy
-def call(String params) {
+def call(String stages) {
     loadEnvironment()
-    switch (stages) {
-        case ~/.*downloadArtifact.*|all/:
-            downloadArtifact()
-        case ~/.*runApp.*|all/:
-            runApp()
-        case ~/.*testAlive.*|all/:
-            testAlive()
-        case ~/.*merge.*|all/:
-            mergeAndTag()
+    if (stages ==~ /.*downloadArtifact.*|all/) {
+        downloadArtifact()
     }
+
+    if (stages ==~ /.*runApp.*|all/) {
+        runApp()
+    }
+
+    if (stages ==~ /.*testAlive.*|all/) {
+        testAlive()
+    }
+
+    if (stages ==~ /.*merge.*|all/) {
+        mergeAndTag()
+    }
+
 }
 
 def loadEnvironment() {

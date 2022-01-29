@@ -2,21 +2,21 @@
 def call(String stages) {
 
     loadEnvironment()
-    switch (stages) {
-        case ~".*build.*":
-            print("stages: " + stages)
-            build()
-        case ~".*staticAnalysis.*":
-            print("stages: " + stages)
-            staticAnalysis()
-        case ~".*uploadArtifact.*":
-            print("stages: " + stages)
-            uploadArtifact()
-        case ~".*generateRelease.*":
-            if (env.BRANCH_NAME == "develop") {
-                print("stages: " + stages)
-                generateRelease()
-            }
+
+    if (stages ==~ /.*build.*|all/) {
+        build()
+    }
+
+    if (stages ==~ /.*staticAnalysis.*|all/) {
+        staticAnalysis()
+    }
+
+    if (stages ==~ /.*uploadArtifact.*|all/) {
+        uploadArtifact()
+    }
+
+    if (stages ==~ /.*generateRelease.*|all/ && env.BRANCH_NAME == "develop") {
+        generateRelease()
     }
 }
 
