@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-def call(String buildResult) {
+def sendNotification(String buildResult) {
 
   if (!env.FAIL_STAGE_NAME) {
     env.FAIL_STAGE_NAME = 'Validación Final'
@@ -16,6 +16,6 @@ def call(String buildResult) {
     slackSend (color: "good", message: "[Grupo1][Pipeline: ${tipoPipeline}][Rama: ${env.BRANCH_NAME}][Resultado: OK]")
   }
   if( buildResult == "FAILURE" ) {
-    slackSend (color: "RED", colorCode: "#FF0000", message: "[Grupo1][Pipeline: ${tipoPipeline}][Rama: ${env.GIT_BRANCH}][Stage: ${env.FAIL_STAGE_NAME}][Resultado: Failed]")
+    slackSend (color: "RED", colorCode: "#FF0000", message: "[Grupo1][Pipeline: ${tipoPipeline}][Rama: ${env.GIT_BRANCH}][Stage: ${env.CURRENT_STAGE}][Resultado: Failed]")
   }
 }

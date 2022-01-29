@@ -1,6 +1,24 @@
 // ciPipeline.groovy
-def call() {
+def call(String stages) {
+
+    loadEnvironment()
+    switch (stages) {
+        case ~/.*build.*|all/:
+            build()
+        case ~/.*staticAnalysis.*|all/:
+            staticAnalysis()
+        case ~/.*uploadArtifact.*|all/:
+            uploadArtifact()
+        case ~/.*generateRelease.*|all/:
+            if (env.BRANCH_NAME == "develop") {
+                generateRelease()
+            }
+    }
+}
+
+def loadEnvironment() {
     stage('1. Load environment') {
+        CURRENT_STAGE = STAGE_NAME
         utils.printEnv()
         env.REPOSITORY = GIT_URL.split('github.com/')[1].split('.git')[0]
         PAYLOAD = github.getCommitPayload()
@@ -9,81 +27,44 @@ def call() {
         currentBuild.description = payload.commit.message
         env.ARTIFACT_VERSION = utils.getVersionFromCommit(payload.commit.message)
         print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
-        // post {
-        //     failure {
-        //         script {
-        //             env.FAIL_STAGE_NAME = STAGE_NAME
-        //         }
-        //     }
-        // }
     }
+}
 
+def build() {
     stage('Paso 2: Compliar') {
+        CURRENT_STAGE = STAGE_NAME
         maven.compile()
-        // post {
-        //     failure {
-        //         script {
-        //             env.FAIL_STAGE_NAME = STAGE_NAME
-        //         }
-        //     }
-        // }
     }
 
     stage('Paso 3: Testear') {
+        CURRENT_STAGE = STAGE_NAME
         maven.test()
-        // post {
-        //     failure {
-        //         script {
-        //             env.FAIL_STAGE_NAME = STAGE_NAME
-        //         }
-        //     }
-        // }
     }
 
     stage('Paso 4: Build .Jar') {
+        CURRENT_STAGE = STAGE_NAME
         maven.buildJar()
-        // post {
-        //     failure {
-        //         script {
-        //             env.FAIL_STAGE_NAME = STAGE_NAME
-        //         }
-        //     }
-        // }
     }
+}
 
+def staticAnalysis() {
     stage('Paso 5: SonarQube analysis') {
+        CURRENT_STAGE = STAGE_NAME
         sonarqube.analyze()
-        // post {
-        //     //record the test results and archive the jar file.
-        //     success {
-        //         script {
-        //             nexus.uploadArtifact()
-        //         }
-        //     }
-        //     // failure {
-        //     //     script {
-        //     //         env.FAIL_STAGE_NAME = STAGE_NAME
-        //     //     }
-        //     // }
-        // }
     }
+}
 
+def uploadArtifact() {
     stage('Paso 6: Subir a Nexus') {
+        CURRENT_STAGE = STAGE_NAME
         nexus.uploadArtifact()
     }
+}
 
+def generateRelease() {
     stage('Paso 6: Generar rama Release') {
-        when {
-            branch 'develop'
-        }
+        CURRENT_STAGE = STAGE_NAME
         sh "echo 'Generando rama release'"
         github.createReleaseBranch()
-        // post {
-        //     failure {
-        //         script {
-        //             env.FAIL_STAGE_NAME = STAGE_NAME
-        //         }
-        //     }
-        // }
     }
 }

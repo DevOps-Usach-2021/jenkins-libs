@@ -6,15 +6,22 @@ def call(Map pipelineParams) {
         environment {
             GITHUB_TOKEN = credentials('github-token')
         }
+        parameters {
+            string (
+                name: 'stages',
+                defaultValue: 'all',
+                trim: true
+            )
+        }
         stages {
             stage("Pipeline") {
                 steps {
                     script {
                         if (env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith('feature-')) {
-                            ciPipeline()
+                            ciPipeline(params.stages)
                         }
                         if (env.BRANCH_NAME.startsWith('release-')) {
-                            cdPipeline()
+                            cdPipeline(params.stages)
                         }
                     }
                 }
@@ -22,7 +29,7 @@ def call(Map pipelineParams) {
         }
         post {
             always {
-                sendNotifications currentBuild.result
+                slack.sendNotification currentBuild.result
             }
             success {
                 script {
