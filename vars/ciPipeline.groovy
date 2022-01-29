@@ -53,19 +53,23 @@ def call() {
 
     stage('Paso 5: SonarQube analysis') {
         sonarqube.analyze()
-        post {
-            //record the test results and archive the jar file.
-            success {
-                script {
-                    nexus.uploadArtifact()
-                }
-            }
-            failure {
-                script {
-                    env.FAIL_STAGE_NAME = STAGE_NAME
-                }
-            }
-        }
+        // post {
+        //     //record the test results and archive the jar file.
+        //     success {
+        //         script {
+        //             nexus.uploadArtifact()
+        //         }
+        //     }
+        //     // failure {
+        //     //     script {
+        //     //         env.FAIL_STAGE_NAME = STAGE_NAME
+        //     //     }
+        //     // }
+        // }
+    }
+
+    stage('Paso 6: Subir a Nexus') {
+        nexus.uploadArtifact()
     }
 
     stage('Paso 6: Generar rama Release') {
