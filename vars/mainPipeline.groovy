@@ -5,7 +5,7 @@ def call(Map pipelineParams) {
         agent any
         environment {
             GITHUB_TOKEN = credentials('github-token')
-            NEXT_VERSION = nextVersion(includeNonAnnotatedTags: true)
+            NEXT_VERSION = nextVersion(nonAnnotatedTag: true)
         }
         parameters {
             string (
