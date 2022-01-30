@@ -29,7 +29,7 @@ def loadEnvironment() {
         def payload = utils.parseJson(PAYLOAD)
         currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
         currentBuild.description = payload.commit.message
-        env.ARTIFACT_VERSION = utils.getVersionFromCommit(payload.commit.message)
+        env.ARTIFACT_VERSION = NEXT_VERSION //utils.getVersionFromCommit(payload.commit.message)
         print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
     }
 }
