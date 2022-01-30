@@ -29,7 +29,7 @@ def loadEnvironment() {
         def payload = utils.parseJson(PAYLOAD)
         currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
         currentBuild.description = payload.commit.message
-        utils.validateConventionalCommit
+        utils.validateConventionalCommit()
         if (BRANCH_NAME.startsWith('feature-')) {
             env.ARTIFACT_VERSION =  nextVersion(preRelease: "alpha.$BUILD_ID", nonAnnotatedTag: true)
         } else {
