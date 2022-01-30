@@ -16,7 +16,7 @@ def validateConventionalCommit(String message) {
         !message.startsWith('chore:') &&
         !message.startsWith('fix:') &&
         !message.startsWith('feat:') &&
-        !message.startsWith('BREAKING CHANGE:') &&
+        !message.startsWith('BREAKING CHANGE:')
         ) {
             throw new Exception("El commit debe comenzar con alguna de las siguientes keywords: <chore: | fix: | feat: | BREAKING CHANGE:>")
         }
