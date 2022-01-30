@@ -2,12 +2,24 @@ def printEnv() {
     sh 'printenv'
 }
 
+// Deprecated
 def getVersionFromCommit(String message) {
     try {
         return message.split('::')[1]
     } catch(Exception ex) {
         throw new Exception("Debe agregar '::<version>' al final del mensaje de commit")
     }
+}
+
+def validateConventionalCommit(String message) {
+    if (
+        !message.startsWith('chore:') &&
+        !message.startsWith('fix:') &&
+        !message.startsWith('feat:') &&
+        !message.startsWith('BREAKING CHANGE:') &&
+        ) {
+            throw new Exception("El commit debe comenzar con alguna de las siguientes keywords: <chore: | fix: | feat: | BREAKING CHANGE:>")
+        }
 }
 
 def getVersionFromBranch(String branchName) {
