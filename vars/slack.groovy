@@ -16,6 +16,6 @@ def sendNotification(String buildResult) {
     slackSend (color: "good", message: "[Grupo1][Pipeline: ${tipoPipeline}][Rama: ${env.BRANCH_NAME}][Resultado: OK]")
   }
   if( buildResult == "FAILURE" ) {
-    slackSend (color: "RED", colorCode: "#FF0000", message: "[Grupo1][Pipeline: ${tipoPipeline}][Rama: ${env.GIT_BRANCH}][Stage: ${env.CURRENT_STAGE}][Resultado: Failed]")
+    slackSend (color: "danger", message: "[Grupo1][Pipeline: ${tipoPipeline}][Rama: ${env.GIT_BRANCH}][Stage: ${env.CURRENT_STAGE}][Resultado: Failed]")
   }
 }
