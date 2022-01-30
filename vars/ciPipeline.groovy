@@ -31,6 +31,7 @@ def loadEnvironment() {
         currentBuild.description = payload.commit.message
         env.ARTIFACT_VERSION = NEXT_VERSION //utils.getVersionFromCommit(payload.commit.message)
         print ("ARTIFACT_VERSION: " + ARTIFACT_VERSION)
+        print ("CURRENT_VERSION: " + CURRENT_VERSION)
     }
 }
 
