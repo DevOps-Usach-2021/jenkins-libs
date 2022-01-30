@@ -30,8 +30,7 @@ def loadEnvironment() {
         currentBuild.displayName = REPOSITORY + '-' + BRANCH_NAME + '-' + BUILD_NUMBER
         currentBuild.description = payload.commit.message
         utils.validateConventionalCommit(payload.commit.message)
-        env.INC_TYPE = payload.commit.message.split(':')[0].trim()
-        env.COMMIT_MSG = payload.commit.message.tokenize(":").drop(1).join(":")
+        env.COMMIT_MSG = payload.commit.message
         if (BRANCH_NAME.startsWith('feature-')) {
             env.ARTIFACT_VERSION =  nextVersion(preRelease: "alpha.$BUILD_ID", nonAnnotatedTag: true)
         } else {
